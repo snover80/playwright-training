@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "commonjs",
+    "types": ["node"]
+  },
+  "include": [
+    "playwright.config.ts",
+    "pages/*.ts",
+    "facades/*.ts",
+    "tests/**/*.ts",
+    "env.d.ts",
+    "fixtures/*.ts",
+    "api/**/*.ts",
+  ]
+}

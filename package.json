@@ -1,0 +1,20 @@
+{
+  "name": "playwright-training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "openapi-zod-client": "^1.18.3",
+    "zod": "^4.0.5"
+  }
+}
