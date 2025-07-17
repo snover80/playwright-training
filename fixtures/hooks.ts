@@ -4,7 +4,7 @@ export const test = base.extend<{ forEachTest: void }>({
   forEachTest: [async ({ page }, use) => {
 
     await page.goto("/");
-    await expect(page).toHaveTitle(/Swag Labs/);
+    await expect(page).toHaveTitle(/Automation Exercise/);
     await use();
 
     console.log('Last URL:', page.url());

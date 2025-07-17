@@ -7,7 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '.env.dev') });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -31,14 +31,21 @@ export default defineConfig({
 
   projects: [
     // {
-    //   name: 'ui',
-    //   use: { ...devices['Desktop Chrome'], 
-    //     baseURL: process.env.BASE_URL, 
-    //     headless: false,
-    //     video: 'on'
-    //   },
-    //   testDir: './tests'
+    //   name: 'setup',
+    //   testMatch: /.*\.setup\.ts/,
+    //   use: { baseURL: process.env.BASE_URL},
     // },
+    {
+      name: 'ui',
+      use: { ...devices['Desktop Chrome'], 
+        baseURL: process.env.BASE_URL, 
+        headless: false,
+        video: 'on',
+        // storageState: '.playwright/.auth.json',
+      },
+      testDir: './tests',
+      // dependencies: ['setup'],
+    },
 
     {
       name: 'api',

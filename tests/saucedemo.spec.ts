@@ -2,6 +2,8 @@ import { test, expect } from '../fixtures/fixtures'
 
 
 test('has title', async ({ page, loginFacade, itemsPage , checkoutPage}) => {
+  await page.goto("https://www.saucedemo.com");
+  await expect(page).toHaveTitle(/Swag Labs/);
   await loginFacade.loginUser(process.env.TEST_USER, process.env.TEST_PASSWORD);
 
   await expect(itemsPage.getTitlePageLocator()).toBeVisible();

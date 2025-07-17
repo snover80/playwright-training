@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Category, CategorySchema } from "./Category";
-import { Tag, TagSchema } from "./Tag";
+import { Category, CategoryBuilder, CategorySchema } from "./Category";
+import { Tag, TagBuilder, TagSchema } from "./Tag";
 
 export enum status {
     availabe = "availabe",
@@ -55,5 +55,26 @@ export class PetBuilder{
 
     build(): Pet {
         return PetSchema.parse(this.pet);
+    }
+
+    static buildPetWithDetails(
+        petId: number,
+        petName: string,
+        categoryId: number,
+        categoryName: string,
+        photoUrls: string[],
+        tagId: number,
+        tagName: string
+    ): Pet {
+        const category = new CategoryBuilder().setId(categoryId).setName(categoryName).build();
+        const tag = new TagBuilder().setId(tagId).setName(tagName).build();
+        return new PetBuilder()
+            .setId(petId)
+            .setName(petName)
+            .setCategory(category)
+            .setPhotoUrls(photoUrls)
+            .setTags([tag])
+            .setStatus(status.availabe)
+            .build();
     }
 }

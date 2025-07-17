@@ -12,4 +12,12 @@ export class BasePage {
   getTitlePageLocator(): Locator{
     return this.titlePage;
   }
+
+  getLoginUserNameLocator(): Locator {
+    return this.page.locator(".navbar-nav a .fa-user");
+  }
+
+  async cliclNavbarLink(linkText: string): Promise<void> {
+    await this.page.getByRole("link", { name: linkText }).click();
+  }
 }

@@ -1,7 +1,5 @@
 import { expect, test } from "../fixtures/api";
-import { CategoryBuilder } from "../models/Category";
-import { Pet, PetBuilder, PetSchema, status } from "../models/Pet";
-import { TagBuilder } from "../models/Tag";
+import { Pet, PetBuilder, PetSchema } from "../models/Pet";
 
 
 const pet1 = {
@@ -10,7 +8,7 @@ const pet1 = {
   status: "availabe"
 } 
 test('Create new Pet', async ({ petEndpoint }) => {
-  const response = await petEndpoint.createPet(petEndpoint.generatePetObject(100, "Playwright dog", 1, "Domestic", ["String"], 2, "house"))
+  const response = await petEndpoint.createPet(PetBuilder.buildPetWithDetails(100, "Playwright dog", 1, "Domestic", ["String"], 2, "house"))
   const responseJson = await response.json();
 
   // Assert response
@@ -23,7 +21,7 @@ test('Create new Pet', async ({ petEndpoint }) => {
 });
 
 test('Get pet', async ({ petEndpoint }) => {
-  const response = await petEndpoint.createPet(petEndpoint.generatePetObject(101, "Playwright cat", 1, "Domestic", ["String"], 2, "house"))
+  const response = await petEndpoint.createPet(PetBuilder.buildPetWithDetails(101, "Playwright cat", 1, "Domestic", ["String"], 2, "house"))
   await expect(response).toBeOK();
   const responseJson = await response.json();
 

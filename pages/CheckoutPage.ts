@@ -1,6 +1,13 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
+interface CheckoutAssertions {
+    cartItem: Locator;
+    paymentInfo: Locator;
+    shippingInfo: Locator;
+    summaryInfo: Locator;
+}
+
 export class CheckoutPage extends BasePage{
 
     private readonly checkoutButton: Locator;
@@ -10,7 +17,7 @@ export class CheckoutPage extends BasePage{
     private readonly continueButton: Locator;
     private readonly finishButton: Locator;
 
-    readonly assertionLocators = {
+    readonly assertionLocators : CheckoutAssertions = {
         cartItem : this.page.locator(".cart_item"),
         paymentInfo: this.page.locator("div[data-test='payment-info-value']"),
         shippingInfo: this.page.locator("div[data-test='shipping-info-value']"),
