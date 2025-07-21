@@ -5,6 +5,7 @@ import { LoginFacade } from '../facades/LoginFacade';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 import { ProductDetails } from '../pages/ProductDetails';
+import { CartPage } from '../pages/Cart';
 
 
 type PageObjects = {
@@ -13,7 +14,8 @@ type PageObjects = {
   loginFacade: LoginFacade;
   loginPage: LoginPage;
   homePage: HomePage;
-  productDetails: ProductDetails;
+  productDetailsPage: ProductDetails;
+  cartPage: CartPage;
 };
 
 export const test = base.extend<PageObjects>({
@@ -37,8 +39,12 @@ export const test = base.extend<PageObjects>({
     await use(new HomePage(page));
   },
 
-  productDetails: async ({ page }, use) => {
+  productDetailsPage: async ({ page }, use) => {
     await use(new ProductDetails(page));
+  },
+
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
   }
 });
 

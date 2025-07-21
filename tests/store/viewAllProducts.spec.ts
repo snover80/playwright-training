@@ -2,13 +2,13 @@ import { test, expect } from '../../fixtures/fixtures';
 
 const productName = "Printed Off Shoulder Top - White";
 
-test('has title', async ({ homePage, productDetails}) => {
+test('has title', async ({ homePage, productDetailsPage}) => {
     await expect(homePage.homePageAssertionLocators.pageBanner).toBeVisible();
     await homePage.cliclNavbarLink("Products");
     await homePage.viewProductDetails(productName);
 
-    await expect(productDetails.productDetailsAssertions.productTitle).toBeVisible();
-    await expect(productDetails.productDetailsAssertions.productAvailability).toBeVisible();
-    await expect(productDetails.productDetailsAssertions.productPrice).toBeVisible();
-    await expect(productDetails.productDetailsAssertions.productCondition).toBeVisible();
+    await expect(productDetailsPage.productDetailsAssertions.productTitle).toBeVisible();
+    await expect(productDetailsPage.productDetailsAssertions.productAvailability).toBeVisible();
+    await expect(productDetailsPage.productDetailsAssertions.productPrice).toBeVisible();
+    await expect(productDetailsPage.productDetailsAssertions.productCondition).toBeVisible();
 });

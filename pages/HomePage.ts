@@ -1,6 +1,6 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
-import it from "zod/v4/locales/it.cjs";
+import { step } from "../fixtures/fixtures";
 
 interface HomePageAssertions {
     pageBanner: Locator;
@@ -23,11 +23,13 @@ export class HomePage extends BasePage {
         pageBanner: this.page.getByRole('heading', { name: 'FEATURES ITEMS' })
     };
 
+    @step('View product details for {itemName}')
     async viewProductDetails(itemName: string): Promise<void> {
         const product = await this.featureItems.filter({hasText: itemName});
         await product.getByRole('link', { name: 'View Product' }).click();
     }
 
+    @step('Get random product from list')
     async getRandomProduct(): Promise<Locator> {
         const items = await this.featureItems.all();
         const randomIndex: number = Math.floor(Math.random() * items.length);
@@ -35,19 +37,30 @@ export class HomePage extends BasePage {
         return item
     }
 
-    async addRandomProductToCart(): Promise<string> {
+    @step('Add random product to cart')
+    async addRandomProductToCart(): Promise<{ name: string; price: string }> {
         const item = await this.getRandomProduct();
-        const productName = await item.locator('.productinfo p').innerText();
-        await item.hover();
-        
-        const addToCartButton = item.locator(".product-overlay .add-to-cart");
-        await addToCartButton.waitFor({state: 'visible'});
-        await addToCartButton.click();
 
+        await expect(async () => {
+            await item.scrollIntoViewIfNeeded();
+            await expect(item).toBeVisible();
+            await item.hover();
+            const addToCartButton = item.locator(".product-overlay .add-to-cart");
+            await expect(addToCartButton).toBeVisible();
+            await expect(addToCartButton).toBeEnabled();
+            await addToCartButton.click();
+        }).toPass();
+        
+        await expect(this.continueShoppingButton).toBeVisible();
         await this.continueShoppingButton.click();
-        await this.productAddedModal.waitFor({state: 'hidden'});
-        
-        return productName;
-    }
+        await expect(this.productAddedModal).toBeHidden();
 
+        const nameLocator = item.locator(".productinfo p");
+        const priceLocator = item.locator(".productinfo h2");
+
+        const name = (await nameLocator.textContent())?.trim() || "";
+        const price = (await priceLocator.textContent())?.trim() || "";
+
+        return { name, price };
+    }
 }

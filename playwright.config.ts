@@ -39,7 +39,6 @@ export default defineConfig({
       name: 'ui',
       use: { ...devices['Desktop Chrome'], 
         baseURL: process.env.BASE_URL, 
-        headless: false,
         video: 'on',
         // storageState: '.playwright/.auth.json',
       },

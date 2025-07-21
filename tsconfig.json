@@ -3,7 +3,8 @@
     "strict": true,
     "target": "ESNext",
     "module": "commonjs",
-    "types": ["node"]
+    "types": ["node"],
+    "sourceMap": true
   },
   "include": [
     "playwright.config.ts",
