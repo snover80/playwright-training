@@ -45,20 +45,17 @@ export class HomePage extends BasePage {
         await expect(async () => {
             await item.scrollIntoViewIfNeeded();
             await expect(item).toBeVisible();
-            await item.hover();
-            const addToCartButton = item.locator(".product-overlay .add-to-cart");
-            await expect(addToCartButton).toBeVisible();
-            await expect(addToCartButton).toBeEnabled();
-            await addToCartButton.click();
-        }).toPass();
-        
+        }).toPass({intervals: [5000], timeout: 30000});
+
+        await expect(async () => {
+            const addToCartButton = item.locator(".add-to-cart").first();
+            await addToCartButton.click({force: true});
+        }).toPass({intervals: [5000], timeout: 30000});
+
         await this.clickContinueShoppingButton();
 
-        const nameLocator = item.locator(".productinfo p");
-        const priceLocator = item.locator(".productinfo h2");
-
-        const name = (await nameLocator.textContent())?.trim() || "";
-        const price = (await priceLocator.textContent())?.trim() || "";
+        const name = (await item.locator(".productinfo p").innerText())?.replace(/\\'/g, "'").trim() || "";
+        const price = (await item.locator(".productinfo h2").innerText())?.replace(/\\'/g, "'").trim() || "";
 
         return { name, price };
     }

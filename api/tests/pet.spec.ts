@@ -2,11 +2,6 @@ import { expect, test } from "../fixtures/api";
 import { Pet, PetBuilder, PetSchema } from "../models/Pet";
 
 
-const pet1 = {
-  id: 100,
-  name: "Pet1",
-  status: "availabe"
-} 
 test('Create new Pet', async ({ petEndpoint }) => {
   const response = await petEndpoint.createPet(PetBuilder.buildPetWithDetails(100, "Playwright dog", 1, "Domestic", ["String"], 2, "house"))
   const responseJson = await response.json();

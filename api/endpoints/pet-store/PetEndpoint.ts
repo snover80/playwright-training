@@ -1,8 +1,6 @@
 import { APIResponse } from "@playwright/test";
 import { RequestHandler } from "../../RequestHandler";
-import { Pet, PetBuilder, status } from "../../models/Pet";
-import { CategoryBuilder } from "../../models/Category";
-import { TagBuilder } from "../../models/Tag";
+import { Pet } from "../../models/Pet";
 
 export class PetEndpoint extends RequestHandler {
     private path: string = "pet";

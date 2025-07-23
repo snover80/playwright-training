@@ -2,7 +2,8 @@ import { test, expect } from '../../fixtures/fixtures';
 
 const productName = "Colour Blocked Shirt – Sky Blue";
 
-test.skip('Add items to cart', async ({ homePage, cartPage}) => {
+test.use({ storageState: {cookies: [], origins: []} });
+test('Add items to cart', async ({ homePage, cartPage}) => {
     await homePage.cliclNavbarLink("Products");
     const product1Info = await homePage.addRandomProductToCart();
     const product2Info = await homePage.addRandomProductToCart();

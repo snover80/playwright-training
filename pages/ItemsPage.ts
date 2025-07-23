@@ -47,7 +47,7 @@ export class ItemsPage extends BasePage{
 
     @step("Add item to cart")
     async addItemToCart(item: Locator): Promise<void> {
-        item.getByText("Add to cart").click();
+        await item.getByText("Add to cart").click();
     }
 
     @step("Click shopping cart")

@@ -26,7 +26,7 @@ test('Sample test list', async ({ page }) => {
 
   await expect(page.locator("ol[class~='ui-search-layout']")).toBeVisible();
 
-  const titleList = await page.locator("ol[class~='ui-search-layout'] a");
+  const titleList = page.locator("ol[class~='ui-search-layout'] a");
 
   const count = await titleList.count();
 
