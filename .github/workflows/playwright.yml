@@ -19,7 +19,9 @@ on:
 
 jobs:
   test:
-    environment: ${{ inputs.env }}
+    env:
+      deploy_env: ${{ inputs.env || qa}}
+    environment: ${{ env.deploy_env }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
