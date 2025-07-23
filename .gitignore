@@ -8,3 +8,4 @@ node_modules/
 .env
 .playwright/
 .env.dev
+.env.qa
