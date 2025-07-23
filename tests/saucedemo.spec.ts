@@ -1,10 +1,10 @@
 import { test, expect } from '../fixtures/fixtures'
 
 
-test('has title', async ({ page, loginFacade, itemsPage , checkoutPage}) => {
+test('Sample sauce demo', async ({ page, loginFacade, itemsPage , checkoutPageSauce}) => {
   await page.goto("https://www.saucedemo.com");
   await expect(page).toHaveTitle(/Swag Labs/);
-  await loginFacade.loginUser(process.env.TEST_USER, process.env.TEST_PASSWORD);
+  await loginFacade.loginUser(process.env.SAUCE_DEMO_USER, process.env.SAUCE_DEMO_PASSWORD);
 
   await expect(itemsPage.getTitlePageLocator()).toBeVisible();
   await expect(itemsPage.getTitlePageLocator()).toHaveText("Products");
@@ -20,8 +20,8 @@ test('has title', async ({ page, loginFacade, itemsPage , checkoutPage}) => {
 
   await itemsPage.clickShoppingCart();
 
-  await expect(checkoutPage.getTitlePageLocator()).toBeVisible();
-  await expect(checkoutPage.getTitlePageLocator()).toHaveText("Your Cart");
+  await expect(checkoutPageSauce.getTitlePageLocator()).toBeVisible();
+  await expect(checkoutPageSauce.getTitlePageLocator()).toHaveText("Your Cart");
 
   const actualDescription = await itemsPage.getItemDescription(page);
   const actualName = await itemsPage.getItemName(page);
@@ -31,22 +31,22 @@ test('has title', async ({ page, loginFacade, itemsPage , checkoutPage}) => {
   expect(expectedName).toEqual(actualName);
   expect(actualPrice).toEqual(expectedPrice);
 
-  await checkoutPage.clickCheckoutButton();
+  await checkoutPageSauce.clickCheckoutButton();
 
-  await expect(checkoutPage.getTitlePageLocator()).toHaveText("Checkout: Your Information");
+  await expect(checkoutPageSauce.getTitlePageLocator()).toHaveText("Checkout: Your Information");
 
-  await checkoutPage.fillFirstName("Random Name");
-  await checkoutPage.fillLastName("Random Last Name");
-  await checkoutPage.fillZipCode("11021");
+  await checkoutPageSauce.fillFirstName("Random Name");
+  await checkoutPageSauce.fillLastName("Random Last Name");
+  await checkoutPageSauce.fillZipCode("11021");
 
-  await checkoutPage.clickContinue();
+  await checkoutPageSauce.clickContinue();
 
-  await expect(checkoutPage.assertionLocators.cartItem).toBeVisible();
-  await expect(checkoutPage.assertionLocators.paymentInfo).toBeVisible();
-  await expect(checkoutPage.assertionLocators.shippingInfo).toBeVisible();
-  await expect(checkoutPage.assertionLocators.summaryInfo).toBeVisible();
+  await expect(checkoutPageSauce.assertionLocators.cartItem).toBeVisible();
+  await expect(checkoutPageSauce.assertionLocators.paymentInfo).toBeVisible();
+  await expect(checkoutPageSauce.assertionLocators.shippingInfo).toBeVisible();
+  await expect(checkoutPageSauce.assertionLocators.summaryInfo).toBeVisible();
 
-  await checkoutPage.clickFinish();
+  await checkoutPageSauce.clickFinish();
 
   await expect(page.locator(".complete-header")).toHaveText("Thank you for your order!");
   await expect(page.locator(".complete-text")).toHaveText("Your order has been dispatched, and will arrive just as fast as the pony can get there!");

@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { step } from "../fixtures/fixtures";
 
 export class LoginPage extends BasePage{
 
@@ -18,6 +19,7 @@ export class LoginPage extends BasePage{
         this.emailTextField = page.locator("[data-qa='login-email']");
     }
 
+    @step("Fill information for first name")
     async fillUsername(username: string): Promise<void> {
         await this.usernameTextField.fill(username);
     }

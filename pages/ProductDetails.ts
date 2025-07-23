@@ -8,6 +8,7 @@ interface ProductDetailsAssertions {
     productAvailability: Locator;
     productCondition: Locator;
     productBrand: Locator;
+    productQuantity: Locator;
 }
 
 export class ProductDetails extends BasePage {
@@ -37,7 +38,8 @@ export class ProductDetails extends BasePage {
         productPrice: this.page.locator('.product-information span span'),
         productAvailability: this.page.locator('.product-information p', { hasText: 'Availability' }),
         productCondition: this.page.locator('.product-information p', { hasText: 'Condition' }),
-        productBrand: this.page.locator('.product-information p', { hasText: 'Brand' })
+        productBrand: this.page.locator('.product-information p', { hasText: 'Brand' }),
+        productQuantity: this.page.locator('#quantity'),
     };
 
     /**

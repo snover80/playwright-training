@@ -1,61 +1,61 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { step } from "../fixtures/fixtures";
 
-interface CheckoutAssertions {
-    cartItem: Locator;
-    paymentInfo: Locator;
-    shippingInfo: Locator;
-    summaryInfo: Locator;
-}
+export class CheckoutPage extends BasePage {
+    readonly placeOrderButton: Locator;
+    readonly nameOnCardField: Locator;
+    readonly cardNumberField: Locator;
+    readonly expiryMonthField: Locator;
+    readonly cvcField: Locator;
+    readonly expiryYearField: Locator;
+    readonly payAndConfirmButton: Locator;
 
-export class CheckoutPage extends BasePage{
-
-    private readonly checkoutButton: Locator;
-    private readonly firstNameTextBox: Locator;
-    private readonly lastNameTextBox: Locator;
-    private readonly zipNumberTextBox: Locator;
-    private readonly continueButton: Locator;
-    private readonly finishButton: Locator;
-
-    readonly assertionLocators : CheckoutAssertions = {
-        cartItem : this.page.locator(".cart_item"),
-        paymentInfo: this.page.locator("div[data-test='payment-info-value']"),
-        shippingInfo: this.page.locator("div[data-test='shipping-info-value']"),
-        summaryInfo: this.page.locator(".summary_subtotal_label")
-    }
-
-    constructor(page: Page){
+    constructor(page: Page) {
         super(page);
-        this.checkoutButton = this.page.getByRole("button", {name: "Checkout"});
-        this.firstNameTextBox = this.page.getByRole("textbox", {name: "First Name"});
-        this.lastNameTextBox = this.page.getByRole("textbox", {name: "Last Name"});
-        this.zipNumberTextBox = this.page.getByRole("textbox", {name: "Zip/Postal Code"});
-        this.continueButton = this.page.getByRole("button", {name: "Continue"});
-        this.finishButton = this.page.getByRole("button", {name: "Finish"})
+        this.placeOrderButton = this.page.getByRole('link', { name: 'Place Order' });
+        this.nameOnCardField = this.page.locator("input[name='name_on_card']");
+        this.cardNumberField = this.page.locator("input[name='card_number']");
+        this.expiryMonthField = this.page.getByRole('textbox', { name: 'MM' });
+        this.cvcField = this.page.locator("input[name='cvc']");
+        this.expiryYearField = this.page.getByRole('textbox', { name: 'YYYY' });
+        this.payAndConfirmButton = this.page.getByRole('button', { name: 'Pay and Confirm Order' });
     }
 
-    async clickCheckoutButton(): Promise<void> {
-        await this.checkoutButton.click();
+    @step("Click Place Order Button")
+    async clickPlaceOrderButton(): Promise<void> {
+        await expect(this.placeOrderButton).toBeVisible();
+        await this.placeOrderButton.click();
     }
 
-    async fillFirstName(firstName: string): Promise<void>{
-        await this.firstNameTextBox.fill(firstName);
+    @step("Fill name on card")
+    async fillNameOnCard(name: string): Promise<void> {
+        await this.nameOnCardField.fill(name);
     }
 
-    async fillLastName(lastName: string): Promise<void>{
-        await this.lastNameTextBox.fill(lastName);
+    @step("Fill card number")
+    async fillCardNumber(cardNumber: string): Promise<void> {
+        await this.cardNumberField.fill(cardNumber);
     }
 
-    async fillZipCode(zipCode: string): Promise<void>{
-        await this.zipNumberTextBox.fill(zipCode);
+    @step("Fill expiry month")
+    async fillExpiryMonth(month: string): Promise<void> {
+        await this.expiryMonthField.fill(month);
     }
 
-    async clickContinue(): Promise<void> {
-        await this.continueButton.click();
+    @step("Fill CVC")
+    async fillCVC(cvc: string): Promise<void> {
+        await this.cvcField.fill(cvc);
     }
 
-    async clickFinish(): Promise<void> {
-        await this.finishButton.click();
+    @step("Fill expiry year")
+    async fillExpiryYear(year: string): Promise<void> {
+        await this.expiryYearField.fill(year);
     }
 
+    @step("Click Pay and Confirm Button")
+    async clickPayAndConfirmButton(): Promise<void> {
+        await expect(this.payAndConfirmButton).toBeVisible();
+        await this.payAndConfirmButton.click();
+    }
 }

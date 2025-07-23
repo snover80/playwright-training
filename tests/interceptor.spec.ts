@@ -1,7 +1,6 @@
-import { test, expect } from '@playwright/test';
-import {LoginFacade} from "../facades/LoginFacade";
+import { test } from '@playwright/test';
 
-test('has title', async ({ page}) => {
+test('Sample mocking response', async ({ page}) => {
   
   await page.route("https://demoqa.com/BookStore/v1/Books", (route) => 
     route.fulfill({
@@ -22,6 +21,5 @@ test('has title', async ({ page}) => {
                 }`
     }))
 
- 
     await page.goto("https://demoqa.com/books");
 });

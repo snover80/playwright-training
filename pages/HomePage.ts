@@ -4,28 +4,29 @@ import { step } from "../fixtures/fixtures";
 
 interface HomePageAssertions {
     pageBanner: Locator;
+    itemsOnPage: Locator;
 }
 
 export class HomePage extends BasePage {
 
     private readonly featureItems: Locator;
-    private readonly continueShoppingButton: Locator;
-    private readonly productAddedModal: Locator;
+    private readonly searchInput: Locator;
 
     constructor(page: Page) {
         super(page);
         this.featureItems = this.page.locator(".features_items .col-sm-4");
-        this.productAddedModal = this.page.locator('#cartModal .modal-content');
-        this.continueShoppingButton = this.page.getByRole('button', { name: 'Continue Shopping' });
+        this.searchInput = this.page.getByRole('textbox', { name: 'Search Product' });
     }
 
     readonly homePageAssertionLocators: HomePageAssertions = {
-        pageBanner: this.page.getByRole('heading', { name: 'FEATURES ITEMS' })
+        pageBanner: this.page.getByRole('heading', { name: 'FEATURES ITEMS' }),
+        itemsOnPage: this.page.locator(".single-products"),
+
     };
 
-    @step('View product details for {itemName}')
+    @step('View product details')
     async viewProductDetails(itemName: string): Promise<void> {
-        const product = await this.featureItems.filter({hasText: itemName});
+        const product = this.featureItems.filter({hasText: itemName});
         await product.getByRole('link', { name: 'View Product' }).click();
     }
 
@@ -51,9 +52,7 @@ export class HomePage extends BasePage {
             await addToCartButton.click();
         }).toPass();
         
-        await expect(this.continueShoppingButton).toBeVisible();
-        await this.continueShoppingButton.click();
-        await expect(this.productAddedModal).toBeHidden();
+        await this.clickContinueShoppingButton();
 
         const nameLocator = item.locator(".productinfo p");
         const priceLocator = item.locator(".productinfo h2");
@@ -63,4 +62,21 @@ export class HomePage extends BasePage {
 
         return { name, price };
     }
+
+    @step('Search for product')
+    async searchForProduct(productName: string): Promise<void> {
+        await expect(this.searchInput).toBeVisible();
+        await this.searchInput.fill(productName);
+        await this.page.locator("#submit_search").click();
+        await expect(this.homePageAssertionLocators.itemsOnPage).toBeVisible();
+        await expect(this.homePageAssertionLocators.itemsOnPage).toHaveCount(1);
+    }
+
+    @step("Get product nae")
+    async getProductName():  Promise<string> {
+        const productNameLocator = this.page.locator(".productinfo p");
+        await expect(productNameLocator).toBeVisible();
+        const productName = await productNameLocator.textContent();
+        return productName || "";
+    }   
 }

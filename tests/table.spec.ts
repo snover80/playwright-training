@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('Sample dealing with tables', async ({ page }) => {
   await page.goto("https://cosmocode.io/automation-practice-webtable/");
 
   const tableContainer = page.locator("xpath=//table[@id='countries']");

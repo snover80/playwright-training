@@ -17,7 +17,7 @@ test('get started link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('test 3', async ({ page }) => {
+test('Sample test list', async ({ page }) => {
   await page.goto('https://www.mercadolibre.com.co/');
 
   await page.locator('[name="as_word"]').fill('iPhone 16');

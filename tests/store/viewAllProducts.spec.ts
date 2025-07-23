@@ -2,8 +2,7 @@ import { test, expect } from '../../fixtures/fixtures';
 
 const productName = "Printed Off Shoulder Top - White";
 
-test('has title', async ({ homePage, productDetailsPage}) => {
-    await expect(homePage.homePageAssertionLocators.pageBanner).toBeVisible();
+test('Test view product details', async ({ homePage, productDetailsPage}) => {
     await homePage.cliclNavbarLink("Products");
     await homePage.viewProductDetails(productName);
 

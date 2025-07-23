@@ -1,26 +1,30 @@
-import { test as base } from '@playwright/test';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { test as base, Page } from '@playwright/test';
+import { CheckoutPageSauce } from '../pages/CheckoutPageSauce';
 import { ItemsPage } from '../pages/ItemsPage';
 import { LoginFacade } from '../facades/LoginFacade';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 import { ProductDetails } from '../pages/ProductDetails';
 import { CartPage } from '../pages/Cart';
+import { ReviewOrderPage } from '../pages/ReviewOrderPage';
+import { OrdersFacade } from '../facades/OrdersFacade';
 
 
 type PageObjects = {
-  checkoutPage: CheckoutPage;
+  checkoutPageSauce: CheckoutPageSauce;
   itemsPage: ItemsPage;
   loginFacade: LoginFacade;
   loginPage: LoginPage;
   homePage: HomePage;
   productDetailsPage: ProductDetails;
   cartPage: CartPage;
+  ordersFacade: OrdersFacade;
+  reviewOrderPage: ReviewOrderPage;
 };
 
 export const test = base.extend<PageObjects>({
-  checkoutPage: async ({ page }, use) => {
-    await use(new CheckoutPage(page));
+  checkoutPageSauce: async ({ page }, use) => {
+    await use(new CheckoutPageSauce(page));
   },
 
   itemsPage: async ({ page }, use) => {
@@ -45,6 +49,14 @@ export const test = base.extend<PageObjects>({
 
   cartPage: async ({ page }, use) => {
     await use(new CartPage(page));
+  },
+
+  ordersFacade: async ({ page }, use) => {
+    await use(new OrdersFacade(page));
+  },
+  
+  reviewOrderPage: async ({ page }, use) => {
+    await use(new ReviewOrderPage(page));
   }
 });
 
