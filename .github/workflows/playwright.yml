@@ -20,7 +20,7 @@ on:
 jobs:
   test:
     env:
-      deploy_env: ${{ inputs.env || qa}}
+      deploy_env: ${{ inputs.env || 'dev' }}
     environment: ${{ env.deploy_env }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: ENV=${{ inputs.env }} npx playwright test --project ui
+      run: ENV=${{ env.deploy_env }} npx playwright test --project ui
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
