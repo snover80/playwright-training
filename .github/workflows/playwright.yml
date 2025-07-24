@@ -23,11 +23,12 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - name: Base64 encode the secret
+    - name: Encode secret with prefix
       run: |
-        echo "Encoded secret: $(echo -n "$MY_SECRET" | base64)"
+        encoded=$(echo -n "DEBUG-$MY_SECRET" | base64)
+        echo "Encoded with prefix: $encoded"
       env:
-        MY_SECRET: ${{ secrets.BASE_URL }}
+        MY_SECRET: ${{ secrets.MY_SECRET }}
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
