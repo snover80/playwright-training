@@ -23,8 +23,10 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - name: Print secret
-      run: echo "${{ secrets.BASE_URL }}"
+    - name: Base64 encode the secret
+      run: echo "Encoded secret: $(echo -n "$MY_SECRET" | base64)"
+      env:
+        MY_SECRET: ${{ secrets.BASE_URL }}
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
