@@ -23,13 +23,6 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - name: Print dummy secret
-      run: |
-        echo "Raw: $DEBUG_SECRET"
-        echo "Base64: $(echo -n "$DEBUG_SECRET" | base64)"
-      env:
-        DEBUG_SECRET: ${{ secrets.DEBUG_SECRET }}
-
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
@@ -41,6 +34,13 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      env:
+        CI: true
+        TEST_USER: ${{ secrets.TEST_USER }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        SAUCE_DEMO_USER: ${{ secrets.SAUCE_DEMO_USER }}
+        SAUCE_DEMO_PASSWORD: ${{ secrets.SAUCE_DEMO_PASSWORD }}
+        BASE_URL: ${{ secrets.BASE_URL}}
       run: ENV=${{ inputs.env || 'dev' }} npx playwright test --project ui
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
