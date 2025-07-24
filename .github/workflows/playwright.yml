@@ -28,7 +28,7 @@ jobs:
         encoded=$(echo -n "DEBUG-$MY_SECRET" | base64)
         echo "Encoded with prefix: $encoded"
       env:
-        MY_SECRET: ${{ secrets.MY_SECRET }}
+        MY_SECRET: ${{ secrets.BASE_URL }}
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
