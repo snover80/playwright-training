@@ -24,7 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Base64 encode the secret
-      run: echo "Encoded secret: $(echo -n "$MY_SECRET" | base64)"
+      run: |
+        echo "Encoded secret: $(echo -n "$MY_SECRET" | base64)"
       env:
         MY_SECRET: ${{ secrets.BASE_URL }}
     - uses: actions/checkout@v4
