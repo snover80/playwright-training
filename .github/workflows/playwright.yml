@@ -41,7 +41,7 @@ jobs:
         SAUCE_DEMO_USER: ${{ secrets.SAUCE_DEMO_USER }}
         SAUCE_DEMO_PASSWORD: ${{ secrets.SAUCE_DEMO_PASSWORD }}
         BASE_URL: ${{ secrets.BASE_URL}}
-      run: ENV=${{ inputs.env || 'dev' }} npx playwright test --project ui
+      run: npx playwright test --project ui
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
